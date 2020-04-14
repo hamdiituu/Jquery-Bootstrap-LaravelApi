@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Laravel Api | Crud</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script
+	src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+	
+
+</head>
+
+
+
+
+
+
+
+<body class="bg-dark" >
+
+
+
+
+	<div class="container">
+		<div class="col-md-auto m-5">
+			
+			<a id="yeniurun" class="btn btn-success" > + Yeni Ürün Ekle</a>
+		</div>
+		<div  class=" bg-light col-md-auto m-5 border p-3 rounded">
+			<table id="urunler" class="table display" style="width:100%" >
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Urun Adı</th>
+						<th>Açıklama</th>
+						<th>Stok</th>
+						<th>Fiyat</th>
+						<th> + </th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+
+
+	</div>
+	<script type="text/javascript">
+
+
+
+		$(document).ready(function(){
+
+
+
+UrunleriGetir();
+
+
+function UrunleriGetir(){
+
+
+				$.ajax({
+
+					url: 'http://127.0.0.1:8000/api/urun',
+					type: 'GET',
+					crossDomain: true,
+
+					dataType: 'json',
+					success: function(data) { 
+    //	console.log(data);
+    for (var i = 0; i < data.length ; i++) {
+
+    	var row = "<td>" + i  + "</td>"
+
+    	row += "<td>" +data[i].UrunAdi + "</td>"
+
+    	row += "<td>" +data[i].Aciklama + "</td>"
+    	row += "<td>" +data[i].Stok + "</td>"
+    	row += "<td>" +data[i].Fiyat + "$"+ "</td>"
+    	row += "<td> <button type='button' class='btn btn-warning'>İşlem</button></td>"
+
+
+    	$("#urunler").children("tbody").append("<tr>" +row + "</tr>");
+
+    }
+
+    $("#urunler").DataTable()
+
+},
+error: function() { alert('Sistemsel Bir Hata Oluştu!'); }
+
+});
+}
+
+
+
+		})
+	</script>
+</body>
+</html>
